@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Just for You 💝</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: #ffe6f0;
+  font-family: 'Comic Sans MS', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.screen {
+  display: none;
+  text-align: center;
+}
+
+.screen.active {
+  display: block;
+}
+
+img {
+  max-width: 300px;
+  border-radius: 20px;
+}
+
+button {
+  padding: 12px 28px;
+  margin: 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  background: #ff7aa2;
+  color: white;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.gifts {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.gifts img {
+  width: 140px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gifts img:hover {
+  transform: scale(1.15);
+}
+
+.fullscreen-gift {
+  position: fixed;
+  inset: 0;
+  background: #fff0f6;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.fullscreen-gift img {
+  max-width: 80%;
+}
+
+.close {
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SOUNDS -->
+<audio id="clickSound" src="sounds/click.mp3"></audio>
+<audio id="giftSound" src="sounds/gift.mp3"></audio>
+
+<!-- START -->
+<div class="screen active" id="start">
+  <img src="images/start-cat.png">
+  <h2>Accept the gift? 🎁</h2>
+  <button onclick="go('yes')">Yes 💖</button>
+  <button onclick="go('no')">No 😐</button>
+</div>
+
+<!-- NO -->
+<div class="screen" id="no">
+  <img src="images/angry-cat.png">
+  <h2>Nope. Go back 😾</h2>
+  <button onclick="go('start')">Go back</button>
+</div>
+
+<!-- YES -->
+<div class="screen" id="yes">
+  <h2>Pick a gift 🎁</h2>
+  <div class="gifts">
+    <img src="images/gift-box.png" onclick="openGift('gift1')">
+    <img src="images/gift-box.png" onclick="openGift('gift2')">
+    <img src="images/gift-box.png" onclick="openGift('gift3')">
+  </div>
+</div>
+
+<!-- GIFT 1 -->
+<div class="fullscreen-gift" id="gift1">
+  <img src="images/birthday.png">
+  <h1>Happy Birthday 🎉</h1>
+  <button class="close" onclick="closeGift()">Close</button>
+</div>
+
+<!-- GIFT 2 -->
+<div class="fullscreen-gift" id="gift2">
+  <img src="images/roses.png">
+  <h2>🌹 For you 🌹</h2>
+  <button class="close" onclick="closeGift()">Close</button>
+</div>
+
+<!-- GIFT 3 -->
+<div class="fullscreen-gift" id="gift3">
+  <div style="display:flex; gap:15px;">
+    <img src="images/panda1.png">
+    <img src="images/panda2.png">
+    <img src="images/panda3.png">
+  </div>
+  <h2>🐼 Panda attack 🐼</h2>
+  <button class="close" onclick="closeGift()">Close</button>
+</div>
+
+<script>
+const clickSound = document.getElementById("clickSound");
+const giftSound = document.getElementById("giftSound");
+
+function play(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+function go(id) {
+  play(clickSound);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function openGift(id) {
+  play(giftSound);
+  document.getElementById(id).style.display = "flex";
+}
+
+function closeGift() {
+  document.querySelectorAll('.fullscreen-gift').forEach(g => g.style.display = "none");
+}
+</script>
+
+</body>
+  </html>
